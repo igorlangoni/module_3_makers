@@ -1,6 +1,6 @@
 from lib.item import Item
 
-class ShopRepository:
+class ItemRepository:
     def __init__(self, connection):
         self.connection = connection
 
@@ -13,3 +13,10 @@ class ShopRepository:
             item = Item(row['id'], row['name'], row['price'], row['quantity'])
             items.append(item)
         return items
+    
+    def create_item(self, item):
+        self.connection.execute(
+            "INSERT INTO items (name, price, quantity) VAlUES (%s, %s, %s)",
+            [item.name, item.price, item.quantity]
+        )
+        return None
