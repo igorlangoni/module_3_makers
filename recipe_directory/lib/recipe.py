@@ -1,4 +1,4 @@
-class Recipe:
+class Recipes:
     def __init__(self, id, name, cooking_time, rating):
         self.id = id
         self.name = name
