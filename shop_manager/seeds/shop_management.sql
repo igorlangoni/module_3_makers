@@ -15,7 +15,15 @@ CREATE TABLE IF NOT EXISTS orders (
     id SERIAL PRIMARY KEY,
     customer text,
     item text,
-    date date
+    date timestamp NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS items_orders (
+    item_id int,
+    order_id int,
+    CONSTRAINT fk_item FOREIGN KEY (item_id) REFERENCES items(id) ON DELETE CASCADE,
+    CONSTRAINT fk_order FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
+    PRIMARY KEY (item_id, order_id)
 );
 
 INSERT INTO items (name, price, quantity) VALUES ('Atletico Mineiro 2023 Home Kit', 80, 50);
@@ -29,13 +37,9 @@ INSERT INTO items (name, price, quantity) VALUES ('Autographed Home Kit' , 200, 
 INSERT INTO items (name, price, quantity) VALUES ('Football Boots, various sizes, adidas' , 65, 100);
 INSERT INTO items (name, price, quantity) VALUES ('Football Boots, various sizes, nike' , 65, 100);
 
+INSERT INTO orders (customer, item) VALUES ('Igor', 'Atletico Mineiro 2023 Home Kit');
+INSERT INTO orders (customer, item) VALUES ('Igor', 'Atletico Mineiro 2023 Away Kit');
+INSERT INTO orders (customer, item) VALUES ('Vitor', 'Football - Size 5, adidas');
 
 
 
-CREATE TABLE IF NOT EXISTS items_orders (
-    item_id int,
-    order_id int,
-    CONSTRAINT fk_item FOREIGN KEY (item_id) REFERENCES items(id) ON DELETE CASCADE,
-    CONSTRAINT fk_order FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
-    PRIMARY KEY (item_id, order_id)
-);
